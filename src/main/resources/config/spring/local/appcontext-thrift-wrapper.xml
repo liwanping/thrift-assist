@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean" >
+        <property name="mappingFiles" value="classpath*:config/dozer/dozer-*.xml"/>
+    </bean>
+
+    <bean class="com.github.thrift.wrapper.spring.DozerContext" />
+
+    <util:map id="proxyTypeFactoryMap" key-type="com.github.thrift.wrapper.proxy.ProxyType"
+              value-type="com.github.thrift.wrapper.proxy.ProxyFactory" >
+        <entry key="JDK" >
+            <bean class="com.github.thrift.wrapper.proxy.JdkProxyFactory" />
+        </entry>
+        <entry key="CGLIB" >
+            <bean class="com.github.thrift.wrapper.proxy.CglibProxyFactory" />
+        </entry>
+        <entry key="JAVASSIST" >
+            <bean class="com.github.thrift.wrapper.proxy.JavassistProxyFactory" />
+        </entry>
+    </util:map>
+
+</beans>
