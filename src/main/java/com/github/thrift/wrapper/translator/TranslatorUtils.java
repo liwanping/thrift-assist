@@ -41,8 +41,8 @@ public class TranslatorUtils {
 
         Map<K, V> destObjMap = new HashMap<K, V>(srcObjMap.size());
         for (Map.Entry<?, ?> entry : srcObjMap.entrySet()) {
-            destObjMap.put(TranslatorUtils.translate(entry.getKey(), destKeyClass),
-                    TranslatorUtils.translate(entry.getValue(), destValueClass));
+            destObjMap.put(translate(entry.getKey(), destKeyClass),
+                    translate(entry.getValue(), destValueClass));
         }
         return destObjMap;
     }
