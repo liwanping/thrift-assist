@@ -32,12 +32,12 @@ public class ManualThriftServiceBenchmarkTest extends AbstractThriftServiceBench
         private OrderService orderService;
 
         @Override
-        public void save(ThriftOrder order) throws TException {
+        public void save(int routingId, ThriftOrder order) throws TException {
             orderService.save(TranslatorUtils.translate(order, Order.class));
         }
 
         @Override
-        public void saveAll(List<ThriftOrder> orders) throws TException {
+        public void saveAll(int routingId, List<ThriftOrder> orders) throws TException {
             orderService.saveAll(TranslatorUtils.translate(orders, Order.class));
         }
 

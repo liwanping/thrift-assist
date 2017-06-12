@@ -107,29 +107,44 @@ public class JavassistProxyFactory implements ProxyFactory {
             body.append(targetMethod.getReturnType().getName()).append(" result = ");
         }
 
+        boolean autoGenerateFirstArg = false;
+        if (parameterTypes.length != targetParameterTypes.length) {
+            autoGenerateFirstArg = true;
+        }
+
         // invoke target method
         body.append("((").append(proxyInvokable.getTargetClass().getName())
                 .append(")proxyInvokable.getTarget()).").append(targetMethod.getName()).append("(");
-        for (int i = 0; i < parameterTypes.length; i++) {
-            if (i > 0) {
+        for (int i = 0, j = 0; i < parameterTypes.length && j < targetParameterTypes.length; i++, j++) {
+            if (autoGenerateFirstArg) {
+                autoGenerateFirstArg = false;
+                if (parameterTypes.length > targetParameterTypes.length) {
+                    i++;
+                } else {
+                    body.append("org.apache.commons.lang.math.RandomUtils.nextInt()");
+                    j++;
+                }
+            }
+
+            if (j > 0) {
                 body.append(",");
             }
 
             // force to cast as the target parameter type
-            if (PrimitiveUtils.isPrimitive(targetParameterTypes[i])) {
+            if (PrimitiveUtils.isPrimitive(targetParameterTypes[j])) {
                 // parse primitive type or array
                 body.append(PrimitiveUtils.class.getName()).append(".parse((");
-                body.append(PrimitiveUtils.getWrapperName(targetParameterTypes[i])).append(")");
+                body.append(PrimitiveUtils.getWrapperName(targetParameterTypes[j])).append(")");
             } else {
                 // force to cast since generic type erased as Object
-                body.append("(").append(targetParameterTypes[i].getName()).append(")");
+                body.append("(").append(targetParameterTypes[j].getName()).append(")");
             }
 
             // invoke to translate parameter value into target type
             body.append(TranslatorUtils.class.getName()).append(".translate(($w)");
             body.append("$").append(i + 1);
-            body.append(", ").append("targetParameterTypes[").append(i).append("])");
-            if (PrimitiveUtils.isPrimitive(targetParameterTypes[i])) {
+            body.append(", ").append("targetParameterTypes[").append(j).append("])");
+            if (PrimitiveUtils.isPrimitive(targetParameterTypes[j])) {
                 body.append(")");
             }
         }

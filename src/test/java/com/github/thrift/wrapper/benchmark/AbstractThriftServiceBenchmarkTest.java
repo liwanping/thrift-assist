@@ -4,6 +4,7 @@ import com.github.thrift.wrapper.AbstractTestCase;
 import com.github.thrift.wrapper.domain.thrift.ThriftOrder;
 import com.github.thrift.wrapper.domain.thrift.ThriftOrderService;
 import com.github.thrift.wrapper.utils.TestUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public abstract class AbstractThriftServiceBenchmarkTest extends AbstractTestCas
         thriftOrderService.findByCreateTime(new Date().getTime());
         thriftOrderService.findByPayerIds(Arrays.asList(123L, 987L, 578L));
         ThriftOrder thriftOrder = TestUtils.createThriftOrder(123);
-        thriftOrderService.save(thriftOrder);
-        thriftOrderService.saveAll(Arrays.asList(thriftOrder));
+        thriftOrderService.save(RandomUtils.nextInt(), thriftOrder);
+        thriftOrderService.saveAll(RandomUtils.nextInt(), Arrays.asList(thriftOrder));
     }
 }

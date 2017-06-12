@@ -4,9 +4,9 @@ include "Orders.thrift"
 
 service ThriftOrderService {
 
-    void save(1:Orders.ThriftOrder order);
+    void save(1:i32 routingId, 2:Orders.ThriftOrder order);
 
-    void saveAll(1:list<Orders.ThriftOrder> orders);
+    void saveAll(1:i32 routingId, 2:list<Orders.ThriftOrder> orders);
 
     void deleteOrder(1:i64 orderId);
 

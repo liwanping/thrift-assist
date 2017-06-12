@@ -89,8 +89,8 @@ public class ThriftServiceTest extends AbstractTestCase {
     public void testSaveOrder() throws Exception {
 
         ThriftOrder thriftOrder = TestUtils.createThriftOrder(123);
-        thriftOrderService.save(thriftOrder);
-        thriftOrderService.saveAll(Arrays.asList(thriftOrder));
+        thriftOrderService.save(RandomUtils.nextInt(), thriftOrder);
+        thriftOrderService.saveAll(RandomUtils.nextInt(), Arrays.asList(thriftOrder));
     }
 
     @Test

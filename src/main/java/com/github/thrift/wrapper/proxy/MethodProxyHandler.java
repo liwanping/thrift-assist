@@ -2,6 +2,7 @@ package com.github.thrift.wrapper.proxy;
 
 import com.github.thrift.wrapper.translator.TranslatorUtils;
 import com.github.thrift.wrapper.utils.ReflectionUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,16 +56,28 @@ public final class MethodProxyHandler {
                     method.getName(), proxyInvokable.getTargetClass().getName()));
         }
 
-        Type[] paramTypes = method.getGenericParameterTypes();
-        Type[] targetParamTypes = targetMethod.getGenericParameterTypes();
-        if (paramTypes.length != targetParamTypes.length) {
-            throw new RuntimeException("Method parameters size not matched");
+        Type[] parameterTypes = method.getGenericParameterTypes();
+        Type[] targetParameterTypes = targetMethod.getGenericParameterTypes();
+
+        boolean autoGenerateFirstArg = false;
+        if (parameterTypes.length != targetParameterTypes.length) {
+            autoGenerateFirstArg = true;
         }
 
         logger.debug("Start to translate method parameters");
-        Object[] targetArgs = new Object[args.length];
-        for (int i = 0; i < args.length; i++) {
-            targetArgs[i] = TranslatorUtils.translate(args[i], targetParamTypes[i]);
+        Object[] targetArgs = new Object[targetParameterTypes.length];
+        for (int i = 0, j = 0; i < parameterTypes.length && j < targetParameterTypes.length; i++, j++) {
+            if (autoGenerateFirstArg) {
+                autoGenerateFirstArg = false;
+                if (parameterTypes.length > targetParameterTypes.length) {
+                    i++;
+                } else {
+                    targetArgs[j] = TranslatorUtils.translate(RandomUtils.nextInt(), targetParameterTypes[j]);
+                    j++;
+                }
+            }
+
+            targetArgs[j] = TranslatorUtils.translate(args[i], targetParameterTypes[j]);
         }
 
         Object result = ReflectionUtils.invokeMethod(targetMethod, proxyInvokable.getTarget(), targetArgs);
