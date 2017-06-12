@@ -27,6 +27,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void delete(long orderId) {
+        logger.info("Simulate to delete order: {}", orderId);
+    }
+
+    @Override
     public Order findByOrderId(long orderId) {
         logger.info("Simulate to findByOrderId: {}", orderId);
         return TestUtils.createOrder(orderId);

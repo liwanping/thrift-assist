@@ -44,4 +44,12 @@ public interface ProxyInvokable {
      * @return
      */
     String[] getWrappedExceptions();
+
+    /**
+     * Returns the corresponding method name in target class against the provided interface method
+     *
+     * @param interfaceMethod
+     * @return
+     */
+    String getTargetMethod(String interfaceMethod);
 }

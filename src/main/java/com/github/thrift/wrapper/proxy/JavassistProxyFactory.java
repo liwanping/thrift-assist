@@ -71,7 +71,8 @@ public class JavassistProxyFactory implements ProxyFactory {
         CtClass ctTargetClass = pool.get(targetClass.getName());
         CtMethod[] ctMethods = ctProxyInterface.getDeclaredMethods();
         for (CtMethod ctMethod : ctMethods) {
-            CtMethod ctTargetMethod = ctTargetClass.getDeclaredMethod(ctMethod.getName());
+            String targetMethodName = proxyInvokable.getTargetMethod(ctMethod.getName());
+            CtMethod ctTargetMethod = ctTargetClass.getDeclaredMethod(targetMethodName);
             String methodBody = generateMethodBody(proxyInvokable, ctMethod, ctTargetMethod);
             CtMethod ctProxyMethod = CtNewMethod.make(Modifier.PUBLIC, ctMethod.getReturnType(),
                     ctMethod.getName(), ctMethod.getParameterTypes(), ctMethod.getExceptionTypes(), methodBody, proxy);
@@ -108,7 +109,7 @@ public class JavassistProxyFactory implements ProxyFactory {
 
         // invoke target method
         body.append("((").append(proxyInvokable.getTargetClass().getName())
-                .append(")proxyInvokable.getTarget()).").append(method.getName()).append("(");
+                .append(")proxyInvokable.getTarget()).").append(targetMethod.getName()).append("(");
         for (int i = 0; i < parameterTypes.length; i++) {
             if (i > 0) {
                 body.append(",");

@@ -92,4 +92,9 @@ public class ThriftServiceTest extends AbstractTestCase {
         thriftOrderService.save(thriftOrder);
         thriftOrderService.saveAll(Arrays.asList(thriftOrder));
     }
+
+    @Test
+    public void testDeleteOrder() throws Exception {
+        thriftOrderService.deleteOrder(123);
+    }
 }

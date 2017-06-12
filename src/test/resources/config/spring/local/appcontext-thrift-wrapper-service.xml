@@ -8,7 +8,6 @@
 
     <bean id="thriftOrderService" class="com.github.thrift.wrapper.spring.thrift.ThriftServiceProxyFactoryBean">
         <property name="serviceInterface" value="com.github.thrift.wrapper.domain.api.OrderService"/>
-        <property name="proxyType" value="JAVASSIST"/>
     </bean>
 
     <bean id="wildcardOrderService" class="com.github.thrift.wrapper.spring.ProxyFactoryBean">

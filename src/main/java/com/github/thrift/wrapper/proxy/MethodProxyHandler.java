@@ -48,7 +48,8 @@ public final class MethodProxyHandler {
 
         logger.debug("Start to map method automatically");
 
-        Method targetMethod = ReflectionUtils.findMethod(proxyInvokable.getTargetClass(), method.getName());
+        Method targetMethod = ReflectionUtils.findMethod(proxyInvokable.getTargetClass(),
+                proxyInvokable.getTargetMethod(method.getName()));
         if (targetMethod == null) {
             throw new RuntimeException(String.format("Method[%s] not found for targetClass:[%s]",
                     method.getName(), proxyInvokable.getTargetClass().getName()));

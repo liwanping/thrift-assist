@@ -55,4 +55,8 @@ public class ProxyInvoker implements ProxyInvokable {
         return null;
     }
 
+    @Override
+    public String getTargetMethod(String interfaceMethod) {
+        return interfaceMethod;
+    }
 }

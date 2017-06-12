@@ -42,6 +42,11 @@ public class ManualThriftServiceBenchmarkTest extends AbstractThriftServiceBench
         }
 
         @Override
+        public void deleteOrder(long orderId) throws TException {
+            orderService.delete(orderId);
+        }
+
+        @Override
         public ThriftOrder findByOrderId(long orderId) throws TException {
             Order order = orderService.findByOrderId(orderId);
             return TranslatorUtils.translate(order, ThriftOrder.class);

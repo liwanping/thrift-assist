@@ -1,6 +1,6 @@
 package com.github.thrift.wrapper.domain.entity;
 
-import com.github.thrift.wrapper.annotation.ThriftMapping;
+import com.github.thrift.wrapper.annotation.Mapping;
 import com.github.thrift.wrapper.domain.thrift.ThriftOrder;
 
 import java.math.BigDecimal;
@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by frank.li on 2017/3/29.
  */
-@ThriftMapping(ThriftOrder.class)
+@Mapping(ThriftOrder.class)
 public class Order {
 
     private Long orderId;

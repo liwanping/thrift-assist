@@ -1,7 +1,10 @@
 package com.github.thrift.wrapper.spring.thrift;
 
-import com.github.thrift.wrapper.annotation.ThriftMapping;
+import com.github.thrift.wrapper.annotation.Mapping;
 import com.github.thrift.wrapper.spring.ProxyFactoryBean;
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by frank.li on 2017/3/27.
@@ -25,12 +28,32 @@ public abstract class AbstractThriftServiceProxyFactoryBean extends ProxyFactory
 
     public void setServiceInterface(Class<?> serviceInterface) {
         this.serviceInterface = serviceInterface;
-        if (!this.serviceInterface.isAnnotationPresent(ThriftMapping.class)) {
-            throw new RuntimeException("Failed to create thrift service client: " + serviceInterface.getName() +
-                    ", must specify thrift class with annotation: @ThriftMapping");
+        if (!this.serviceInterface.isAnnotationPresent(Mapping.class)) {
+            throw new RuntimeException("Failed to create thrift proxy for service: " + serviceInterface.getName() +
+                    ", must specify thrift class with annotation: @Mapping");
         }
 
         initProxy();
+    }
+
+    @Override
+    public String getTargetMethod(String interfaceMethod) {
+
+        for (Method method : serviceInterface.getMethods()) {
+            if (method.isAnnotationPresent(Mapping.class)) {
+                Mapping mapping = method.getAnnotation(Mapping.class);
+                if (StringUtils.isNotEmpty(mapping.method())) {
+                    if (interfaceMethod.equals(method.getName())) {
+                        return mapping.method();
+                    }
+                    if (interfaceMethod.equals(mapping.method())) {
+                        return method.getName();
+                    }
+                }
+            }
+        }
+
+        return super.getTargetMethod(interfaceMethod);
     }
 
     public boolean isAsynchronous() {
@@ -43,7 +66,7 @@ public abstract class AbstractThriftServiceProxyFactoryBean extends ProxyFactory
 
     protected Class<?> loadThriftServiceClass() {
 
-        Class<?> thriftServiceClass = this.serviceInterface.getAnnotation(ThriftMapping.class).value();
+        Class<?> thriftServiceClass = this.serviceInterface.getAnnotation(Mapping.class).value();
         String thriftServiceIface = thriftServiceClass.getName() +
                 (this.asynchronous ? THRIFT_ASYNCIFACE : THRIFT_IFACE);
 

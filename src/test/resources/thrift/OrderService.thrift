@@ -8,6 +8,8 @@ service ThriftOrderService {
 
     void saveAll(1:list<Orders.ThriftOrder> orders);
 
+    void deleteOrder(1:i64 orderId);
+
     Orders.ThriftOrder findByOrderId(1:i64 orderId);
 
     list<Orders.ThriftOrder> findByPayerId(1:i64 payerId);

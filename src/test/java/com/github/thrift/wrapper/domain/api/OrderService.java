@@ -1,6 +1,6 @@
 package com.github.thrift.wrapper.domain.api;
 
-import com.github.thrift.wrapper.annotation.ThriftMapping;
+import com.github.thrift.wrapper.annotation.Mapping;
 import com.github.thrift.wrapper.domain.entity.Order;
 import com.github.thrift.wrapper.domain.thrift.ThriftOrderService;
 
@@ -11,12 +11,15 @@ import java.util.Map;
 /**
  * Created by frank.li on 2017/4/1.
  */
-@ThriftMapping(ThriftOrderService.class)
+@Mapping(ThriftOrderService.class)
 public interface OrderService {
 
     void save(Order order);
 
     void saveAll(List<Order> orders);
+
+    @Mapping(method = "deleteOrder")
+    void delete(long orderId);
 
     Order findByOrderId(long orderId);
 
