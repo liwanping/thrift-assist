@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="orderService" class="com.github.thrift.wrapper.domain.service.OrderServiceImpl"/>
+    <bean id="orderService" class="com.github.thrift.assist.domain.service.OrderServiceImpl"/>
 
     <bean id="thriftOrderService"
-          class="com.github.thrift.wrapper.benchmark.ManualThriftServiceBenchmarkTest.ThriftOrderServiceImpl">
+          class="com.github.thrift.assist.benchmark.ManualThriftServiceBenchmarkTest.ThriftOrderServiceImpl">
     </bean>
 
 </beans>

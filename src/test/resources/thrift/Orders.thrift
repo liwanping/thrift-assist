@@ -1,4 +1,4 @@
-namespace java com.github.thrift.wrapper.domain.thrift
+namespace java com.github.thrift.assist.domain.thrift
 
 struct ThriftOrder {
 		1:i64 orderId

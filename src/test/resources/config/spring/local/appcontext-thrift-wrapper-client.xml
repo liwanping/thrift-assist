@@ -3,14 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="orderService" class="com.github.thrift.wrapper.spring.thrift.ThriftServiceClientProxyFactoryBean" >
-        <property name="serviceInterface" value="com.github.thrift.wrapper.domain.api.OrderService" />
+    <bean id="orderService" class="com.github.thrift.assist.spring.thrift.ThriftServiceClientProxyFactoryBean" >
+        <property name="serviceInterface" value="com.github.thrift.assist.domain.api.OrderService" />
     </bean>
 
-    <bean class="com.github.thrift.wrapper.spring.thrift.ThriftServiceProxyFactoryBean" >
-        <property name="serviceInterface" value="com.github.thrift.wrapper.domain.api.OrderService" />
+    <bean class="com.github.thrift.assist.spring.thrift.ThriftServiceProxyFactoryBean" >
+        <property name="serviceInterface" value="com.github.thrift.assist.domain.api.OrderService" />
         <property name="target">
-            <bean class="com.github.thrift.wrapper.domain.service.OrderServiceImpl" />
+            <bean class="com.github.thrift.assist.domain.service.OrderServiceImpl" />
         </property>
     </bean>
 

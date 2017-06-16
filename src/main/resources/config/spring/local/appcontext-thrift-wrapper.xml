@@ -9,18 +9,18 @@
         <property name="mappingFiles" value="classpath*:config/dozer/dozer-*.xml"/>
     </bean>
 
-    <bean class="com.github.thrift.wrapper.spring.DozerContext" />
+    <bean class="com.github.thrift.assist.spring.DozerContext" />
 
-    <util:map id="proxyTypeFactoryMap" key-type="com.github.thrift.wrapper.proxy.ProxyType"
-              value-type="com.github.thrift.wrapper.proxy.ProxyFactory" >
+    <util:map id="proxyTypeFactoryMap" key-type="com.github.thrift.assist.proxy.ProxyType"
+              value-type="com.github.thrift.assist.proxy.ProxyFactory" >
         <entry key="JDK" >
-            <bean class="com.github.thrift.wrapper.proxy.JdkProxyFactory" />
+            <bean class="com.github.thrift.assist.proxy.JdkProxyFactory" />
         </entry>
         <entry key="CGLIB" >
-            <bean class="com.github.thrift.wrapper.proxy.CglibProxyFactory" />
+            <bean class="com.github.thrift.assist.proxy.CglibProxyFactory" />
         </entry>
         <entry key="JAVASSIST" >
-            <bean class="com.github.thrift.wrapper.proxy.JavassistProxyFactory" />
+            <bean class="com.github.thrift.assist.proxy.JavassistProxyFactory" />
         </entry>
     </util:map>
 

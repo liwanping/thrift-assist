@@ -1,1 +1,1 @@
-# thrift-wrapper
+# thrift-assist

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github</groupId>
-    <artifactId>thrift-wrapper</artifactId>
-    <version>1.0</version>
+    <artifactId>thrift-assist</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
